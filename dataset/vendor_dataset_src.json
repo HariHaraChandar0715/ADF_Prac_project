@@ -1,0 +1,28 @@
+{
+	"name": "vendor_dataset_src",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LK_Vendor_Drop_Conn",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "order",
+				"container": "vendor-drop-dev"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "order_id,customer_id,product_id,order_amount,order_status,order_date,city",
+				"type": "String"
+			}
+		]
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"name": "ecom_Prac_dataset_tgt",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LK_Ecom_Prac_Tgt_Conn",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "landing/orders",
+				"container": "ecom-prac-dev"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
