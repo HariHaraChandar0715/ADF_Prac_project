@@ -1,0 +1,15 @@
+{
+	"name": "DEV-ADF-Retail-Analytics",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a7cc8a11-5c2b-484f-8e46-f04ad6726b27",
+		"tenantId": "7115877b-434b-4b3a-99b5-7b20c780a40b"
+	}
+}
