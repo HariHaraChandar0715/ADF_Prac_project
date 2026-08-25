@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "DEV-ADF-Retail-Analytics"
+		},
+		"LK_Ecom_Prac_Tgt_Conn_connectionString": {
+			"value": ""
+		},
+		"LK_Vendor_Drop_Conn_connectionString": {
+			"value": ""
+		}
+	}
+}
