@@ -10,7 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "landing/orders",
+				"folderPath": {
+					"value": "@concat('landing/processed_orders/',formatDateTime(utcNow(),'yyyy/MM/dd'))",
+					"type": "Expression"
+				},
 				"container": "ecom-prac-dev"
 			},
 			"columnDelimiter": ",",
