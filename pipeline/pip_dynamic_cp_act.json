@@ -1,0 +1,9 @@
+{
+	"name": "pip_dynamic_cp_act",
+	"properties": {
+		"folder": {
+			"name": "test_pip"
+		},
+		"annotations": []
+	}
+}
