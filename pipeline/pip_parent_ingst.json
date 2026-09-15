@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "LK_Get_File_Config",
+				"name": "LKP_Get_File_Config",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
