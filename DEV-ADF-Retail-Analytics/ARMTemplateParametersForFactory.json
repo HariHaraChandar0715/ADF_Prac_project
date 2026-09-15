@@ -5,11 +5,23 @@
 		"factoryName": {
 			"value": "DEV-ADF-Retail-Analytics"
 		},
+		"LK_Azure_Sql_Metadata_password": {
+			"value": ""
+		},
 		"LK_Ecom_Prac_Tgt_Conn_connectionString": {
 			"value": ""
 		},
 		"LK_Vendor_Drop_Conn_connectionString": {
 			"value": ""
+		},
+		"LK_Azure_Sql_Metadata_properties_typeProperties_server": {
+			"value": "salesmetadatapip.database.windows.net"
+		},
+		"LK_Azure_Sql_Metadata_properties_typeProperties_database": {
+			"value": "vendorsales"
+		},
+		"LK_Azure_Sql_Metadata_properties_typeProperties_userName": {
+			"value": "CloudSA435f6be5"
 		}
 	}
 }

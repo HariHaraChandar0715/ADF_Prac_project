@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "DEV-ADF-Retail-Analytics"
 		},
+		"LK_Azure_Sql_Metadata_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LK_Azure_Sql_Metadata'"
+		},
 		"LK_Ecom_Prac_Tgt_Conn_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LK_Ecom_Prac_Tgt_Conn'"
@@ -14,6 +18,18 @@
 		"LK_Vendor_Drop_Conn_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LK_Vendor_Drop_Conn'"
+		},
+		"LK_Azure_Sql_Metadata_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "salesmetadatapip.database.windows.net"
+		},
+		"LK_Azure_Sql_Metadata_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "vendorsales"
+		},
+		"LK_Azure_Sql_Metadata_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "CloudSA435f6be5"
 		},
 		"containerUri": {
 			"type": "string",
@@ -42,11 +58,23 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"LK_Azure_Sql_Metadata_password": {
+						"value": "[parameters('LK_Azure_Sql_Metadata_password')]"
+					},
 					"LK_Ecom_Prac_Tgt_Conn_connectionString": {
 						"value": "[parameters('LK_Ecom_Prac_Tgt_Conn_connectionString')]"
 					},
 					"LK_Vendor_Drop_Conn_connectionString": {
 						"value": "[parameters('LK_Vendor_Drop_Conn_connectionString')]"
+					},
+					"LK_Azure_Sql_Metadata_properties_typeProperties_server": {
+						"value": "[parameters('LK_Azure_Sql_Metadata_properties_typeProperties_server')]"
+					},
+					"LK_Azure_Sql_Metadata_properties_typeProperties_database": {
+						"value": "[parameters('LK_Azure_Sql_Metadata_properties_typeProperties_database')]"
+					},
+					"LK_Azure_Sql_Metadata_properties_typeProperties_userName": {
+						"value": "[parameters('LK_Azure_Sql_Metadata_properties_typeProperties_userName')]"
 					}
 				}
 			},
