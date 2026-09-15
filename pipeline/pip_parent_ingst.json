@@ -27,6 +27,69 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "FE_Process_Files",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "LKP_Get_File_Config",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('LKP_Get_File_Config').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Exc_Ingest_Files",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "pip_child_ingst",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"P_SourceContainer": {
+										"value": "@item.SourceContainer",
+										"type": "Expression"
+									},
+									"P_SourceFolder": {
+										"value": "@item.SourceFolder",
+										"type": "Expression"
+									},
+									"P_SourceFileName": {
+										"value": "@item.SourceFileName",
+										"type": "Expression"
+									},
+									"P_SinkContainer": {
+										"value": "@item.SinkContainer",
+										"type": "Expression"
+									},
+									"P_SinkFolder": {
+										"value": "@item.SinkBasePath",
+										"type": "Expression"
+									},
+									"P_SinkFileName": {
+										"value": "@item.SinkFileName",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		"annotations": []
