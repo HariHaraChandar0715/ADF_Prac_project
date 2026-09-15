@@ -1,6 +1,114 @@
 {
 	"name": "test_param_pip",
 	"properties": {
+		"activities": [
+			{
+				"name": "cpy_ingest_brnz",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_ADLS_SRC",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": {
+								"value": "@pipeline().parameters.P_SourceContainer",
+								"type": "Expression"
+							},
+							"folderPath": {
+								"value": "@pipeline().parameters.P_SourceFolder",
+								"type": "Expression"
+							},
+							"fileName": {
+								"value": "@pipeline().parameters.P_SourceFileName",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ADLS_SNK",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": {
+								"value": "@pipeline().parameters.P_SinkContainer",
+								"type": "Expression"
+							},
+							"folderPath": {
+								"value": "@pipeline().parameters.P_SinkFolder",
+								"type": "Expression"
+							},
+							"filePath": {
+								"value": "@pipeline().parameters.P_SinkFileName",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"P_SourceContainer": {
+				"type": "string"
+			},
+			"P_SourceFolder": {
+				"type": "string"
+			},
+			"P_SourceFileName": {
+				"type": "string"
+			},
+			"P_SinkContainer": {
+				"type": "string"
+			},
+			"P_SinkFolder": {
+				"type": "string"
+			},
+			"P_SinkFileName": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
