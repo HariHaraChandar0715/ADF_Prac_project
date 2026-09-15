@@ -268,6 +268,88 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_AZ_SQL_DB_MT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LK_Azure_Sql_Metadata",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ConfigId",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SourceSystem",
+						"type": "varchar"
+					},
+					{
+						"name": "SourceFileName",
+						"type": "varchar"
+					},
+					{
+						"name": "SourceFolder",
+						"type": "varchar"
+					},
+					{
+						"name": "SinkContainer",
+						"type": "varchar"
+					},
+					{
+						"name": "SinkBasePath",
+						"type": "varchar"
+					},
+					{
+						"name": "FileFormat",
+						"type": "varchar"
+					},
+					{
+						"name": "Delimiter",
+						"type": "char"
+					},
+					{
+						"name": "HasHeader",
+						"type": "bit"
+					},
+					{
+						"name": "LoadType",
+						"type": "varchar"
+					},
+					{
+						"name": "WatermarkColumn",
+						"type": "varchar"
+					},
+					{
+						"name": "LastWatermark",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "IsActive",
+						"type": "bit"
+					},
+					{
+						"name": "Priority",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "ADF_File_Config"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LK_Azure_Sql_Metadata')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pip_child_ingst')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -471,6 +553,113 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/vendor_dataset_src')]",
 				"[concat(variables('factoryId'), '/datasets/ecom_Prac_dataset_tgt')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pip_parent_ingst')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "LKP_Get_File_Config",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT\n    SourceContainer,\n    SourceFolder,\n    SourceFileName,\n    SinkContainer,\n    SinkBasePath,\n    SourceFileName AS SinkFileName,\n    FileFormat,\n    Delimiter,\n    HasHeader,\n    LoadType\nFROM dbo.ADF_File_Config\nWHERE IsActive = 1\nORDER BY Priority;",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DS_AZ_SQL_DB_MT",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "FE_Process_Files",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "LKP_Get_File_Config",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('LKP_Get_File_Config').output.value",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Exc_Ingest_Files",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"policy": {
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pip_child_ingst",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"P_SourceContainer": {
+												"value": "@item.SourceContainer",
+												"type": "Expression"
+											},
+											"P_SourceFolder": {
+												"value": "@item.SourceFolder",
+												"type": "Expression"
+											},
+											"P_SourceFileName": {
+												"value": "@item.SourceFileName",
+												"type": "Expression"
+											},
+											"P_SinkContainer": {
+												"value": "@item.SinkContainer",
+												"type": "Expression"
+											},
+											"P_SinkFolder": {
+												"value": "@item.SinkBasePath",
+												"type": "Expression"
+											},
+											"P_SinkFileName": {
+												"value": "@item.SinkFileName",
+												"type": "Expression"
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_AZ_SQL_DB_MT')]",
+				"[concat(variables('factoryId'), '/pipelines/pip_child_ingst')]"
 			]
 		}
 	]
