@@ -1,0 +1,77 @@
+{
+	"name": "DS_AZ_SQL_DB_MT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LK_Azure_Sql_Metadata",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ConfigId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SourceSystem",
+				"type": "varchar"
+			},
+			{
+				"name": "SourceFileName",
+				"type": "varchar"
+			},
+			{
+				"name": "SourceFolder",
+				"type": "varchar"
+			},
+			{
+				"name": "SinkContainer",
+				"type": "varchar"
+			},
+			{
+				"name": "SinkBasePath",
+				"type": "varchar"
+			},
+			{
+				"name": "FileFormat",
+				"type": "varchar"
+			},
+			{
+				"name": "Delimiter",
+				"type": "char"
+			},
+			{
+				"name": "HasHeader",
+				"type": "bit"
+			},
+			{
+				"name": "LoadType",
+				"type": "varchar"
+			},
+			{
+				"name": "WatermarkColumn",
+				"type": "varchar"
+			},
+			{
+				"name": "LastWatermark",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "IsActive",
+				"type": "bit"
+			},
+			{
+				"name": "Priority",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ADF_File_Config"
+		}
+	}
+}
