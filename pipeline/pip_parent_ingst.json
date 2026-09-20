@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT\n    SourceContainer,\n    SourceFolder,\n    SourceFileName,\n    SinkContainer,\n    SinkBasePath,\n    SourceFileName AS SinkFileName,\n    FileFormat,\n    Delimiter,\n    HasHeader,\n    LoadType\nFROM dbo.ADF_File_Config\nWHERE IsActive = 1\nORDER BY Priority;",
+						"sqlReaderQuery": "SELECT\n    SourceSystem,\n    SourceFileName,\n    SourceFolder,\n    SinkContainer,\n    SinkBasepath,\n    FileFormat,\n    Delimiter,\n    HasHeader,\n    LoadType,\n    WatermarkColumn,\n    LastWatermark,\n    IsActive,\n    Priority\nFROM dbo.ADF_File_Config\nWHERE IsActive = 1\nORDER BY Priority;",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
