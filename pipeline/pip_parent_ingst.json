@@ -31,8 +31,6 @@
 			{
 				"name": "FE_Process_Files",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LKP_Get_File_Config",
