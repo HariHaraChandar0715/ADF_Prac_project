@@ -60,7 +60,33 @@
 									"referenceName": "pip_child_ingst",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"p_src_container": {
+										"value": "@item().SourceContainer",
+										"type": "Expression"
+									},
+									"p_src_folder": {
+										"value": "@item().SourceFolder",
+										"type": "Expression"
+									},
+									"p_sink_container": {
+										"value": "@item().SourceFilename",
+										"type": "Expression"
+									},
+									"p_sink_folder": {
+										"value": "@item().sinkContainer",
+										"type": "Expression"
+									},
+									"p_sink_file": {
+										"value": "@item().sinkFolder",
+										"type": "Expression"
+									},
+									"p_src_file": {
+										"value": "@item().sinkFileName",
+										"type": "Expression"
+									}
+								}
 							}
 						}
 					]
