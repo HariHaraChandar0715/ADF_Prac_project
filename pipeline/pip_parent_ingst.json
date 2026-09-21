@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT\n    SourceSystem,\n    SourceFileName,\n    SourceFolder,\n    SinkContainer,\n    SinkBasepath,\n    FileFormat,\n    Delimiter,\n    HasHeader,\n    LoadType,\n    WatermarkColumn,\n    LastWatermark,\n    IsActive,\n    Priority\nFROM dbo.ADF_File_Config\nWHERE IsActive = 1\nORDER BY Priority;",
+						"sqlReaderQuery": "select \n    SourceContainer,\n    SourceFolder,\n    SourceFilename,\n    TargetContainer,\n    TargetSchema,\n    TargetFolder,\n    TargetFileName\nfrom metadata.AdfPipConfig;",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -31,6 +31,8 @@
 			{
 				"name": "FE_Process_Files",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LKP_Get_File_Config",

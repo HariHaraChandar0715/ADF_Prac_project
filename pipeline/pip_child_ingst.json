@@ -20,6 +20,14 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "@pipeline().parameters.P_SourceSystem",
+								"type": "Expression"
+							},
+							"wildcardFileName": {
+								"value": "@pipeline().parameters.P_SourceFileName",
+								"type": "Expression"
+							},
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -53,7 +61,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"containerName": {
-								"value": "@pipeline().parameters.P_SourceContainer",
+								"value": "@pipeline().parameters.P_SourceSystem",
 								"type": "Expression"
 							},
 							"folderPath": {
@@ -90,7 +98,7 @@
 			}
 		],
 		"parameters": {
-			"P_SourceContainer": {
+			"P_SourceSystem": {
 				"type": "string"
 			},
 			"P_SourceFolder": {
