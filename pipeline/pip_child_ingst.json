@@ -20,13 +20,40 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": {
+								"value": "@pipeline().parameters.p_src_folder",
+								"type": "Expression"
+							},
+							"wildcardFileName": {
+								"value": "@concat(pipeline().parameters.p_src_file,'*.csv')",
+								"type": "Expression"
+							},
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -39,6 +66,30 @@
 							},
 							"srcFolderPath": {
 								"value": "@pipeline().parameters.p_src_folder",
+								"type": "Expression"
+							},
+							"srcFileName": {
+								"value": "@pipeline().parameters.p_src_file",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_ADLS_SNK",
+						"type": "DatasetReference",
+						"parameters": {
+							"sinkContainer": {
+								"value": "@pipeline().parameters.p_sink_container",
+								"type": "Expression"
+							},
+							"sinkfolder": {
+								"value": "@pipeline().parameters.p_sink_folder",
+								"type": "Expression"
+							},
+							"sinkFileName": {
+								"value": "@concat(pipeline().parameters.p_sink_folder,formatDateTime(utcNow(), 'yyyyMMdd'), '.csv')",
 								"type": "Expression"
 							}
 						}
