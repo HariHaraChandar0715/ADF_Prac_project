@@ -31,7 +31,17 @@
 				"inputs": [
 					{
 						"referenceName": "DS_ADLS_SRC",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"srcContainer": {
+								"value": "@pipeline().parameters.p_src_container",
+								"type": "Expression"
+							},
+							"srcFolderPath": {
+								"value": "@pipeline().parameters.p_src_folder",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
@@ -50,6 +60,9 @@
 				"type": "string"
 			},
 			"p_sink_file": {
+				"type": "string"
+			},
+			"p_src_file": {
 				"type": "string"
 			}
 		},
