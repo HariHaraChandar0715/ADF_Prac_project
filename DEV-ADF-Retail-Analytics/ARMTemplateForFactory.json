@@ -234,28 +234,28 @@
 										},
 										"waitOnCompletion": true,
 										"parameters": {
-											"P_SourceContainer": {
-												"value": "@item.SourceContainer",
+											"p_src_container": {
+												"value": "@item().SourceContainer",
 												"type": "Expression"
 											},
-											"P_SourceFolder": {
-												"value": "@item.SourceFolder",
+											"p_src_folder": {
+												"value": "@item().SourceFolder",
 												"type": "Expression"
 											},
-											"P_SourceFileName": {
-												"value": "@item.SourceFileName",
+											"p_sink_container": {
+												"value": "@item().sinkContainer",
 												"type": "Expression"
 											},
-											"P_SinkContainer": {
-												"value": "@item.SinkContainer",
+											"p_sink_folder": {
+												"value": "@item().sinkFolder",
 												"type": "Expression"
 											},
-											"P_SinkFolder": {
-												"value": "@item.SinkBasePath",
+											"p_sink_file": {
+												"value": "@item().sinkFileName",
 												"type": "Expression"
 											},
-											"P_SinkFileName": {
-												"value": "@item.SinkFileName",
+											"p_src_file": {
+												"value": "@item().SourceFilename",
 												"type": "Expression"
 											}
 										}
