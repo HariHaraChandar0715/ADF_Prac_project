@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select \n    SourceContainer,\n    SourceFolder,\n    concat(SourceFilename,createdOn) as SourceFilename,\n    TargetContainer as sinkContainer,\n    concat(TargetSchema,'/',TargetFolder) as sinkFolder,\n    TargetFileName as sinkFileName\nfrom metadata.AdfPipConfig;",
+						"sqlReaderQuery": "select \n    SourceContainer,\n    SourceFolder,\n    concat(SourceFilename,replace(createdOn,'-','')) as SourceFilename,\n    TargetContainer as sinkContainer,\n    concat(TargetSchema,'/',TargetFolder) as sinkFolder,\n    TargetFileName as sinkFileName\nfrom metadata.AdfPipConfig;",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
