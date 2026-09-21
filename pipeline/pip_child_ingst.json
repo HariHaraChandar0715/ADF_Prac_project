@@ -1,8 +1,55 @@
 {
 	"name": "pip_child_ingst",
 	"properties": {
+		"activities": [
+			{
+				"name": "cpy_file_ingst",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_ADLS_SRC",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
 		"parameters": {
-			"P_src": {
+			"p_src_container": {
+				"type": "string"
+			},
+			"p_src_folder": {
+				"type": "string"
+			},
+			"p_sink_container": {
+				"type": "string"
+			},
+			"p_sink_folder": {
+				"type": "string"
+			},
+			"p_sink_file": {
 				"type": "string"
 			}
 		},
