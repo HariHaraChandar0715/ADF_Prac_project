@@ -115,13 +115,13 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"containerName": {
+					"sinkContainer": {
 						"type": "string"
 					},
-					"folderPath": {
+					"sinkfolder": {
 						"type": "string"
 					},
-					"filePath": {
+					"sinkFileName": {
 						"type": "string"
 					}
 				},
@@ -130,16 +130,12 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@dataset().filePath",
-							"type": "Expression"
-						},
 						"folderPath": {
-							"value": "@dataset().folderPath",
+							"value": "@dataset().sinkfolder",
 							"type": "Expression"
 						},
 						"container": {
-							"value": "@dataset().containerName",
+							"value": "@dataset().sinkContainer",
 							"type": "Expression"
 						}
 					},
@@ -164,13 +160,13 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"containerName": {
+					"srcContainer": {
 						"type": "string"
 					},
-					"folderPath": {
+					"srcFolderPath": {
 						"type": "string"
 					},
-					"fileName": {
+					"srcFileName": {
 						"type": "string"
 					}
 				},
@@ -180,15 +176,15 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": {
-							"value": "@dataset().fileName",
+							"value": "@dataset().srcFileName",
 							"type": "Expression"
 						},
 						"folderPath": {
-							"value": "@dataset().folderPath",
+							"value": "@dataset().srcFolderPath",
 							"type": "Expression"
 						},
 						"container": {
-							"value": "@dataset().containerName",
+							"value": "@dataset().srcContainer",
 							"type": "Expression"
 						}
 					},
@@ -198,70 +194,6 @@
 					"quoteChar": "\""
 				},
 				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LK_Vendor_Drop_Conn')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ecom_Prac_dataset_tgt')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LK_Ecom_Prac_Tgt_Conn",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@concat('landing/processed_orders/',formatDateTime(utcNow(),'yyyy/MM/dd'))",
-							"type": "Expression"
-						},
-						"container": "ecom-prac-dev"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LK_Ecom_Prac_Tgt_Conn')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/vendor_dataset_src')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LK_Vendor_Drop_Conn",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "order",
-						"container": "vendor-drop-dev"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "order_id,customer_id,product_id,order_amount,order_status,order_date,city",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LK_Vendor_Drop_Conn')]"
@@ -350,13 +282,77 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ecom_Prac_dataset_tgt')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LK_Ecom_Prac_Tgt_Conn",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": {
+							"value": "@concat('landing/processed_orders/',formatDateTime(utcNow(),'yyyy/MM/dd'))",
+							"type": "Expression"
+						},
+						"container": "ecom-prac-dev"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LK_Ecom_Prac_Tgt_Conn')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/vendor_dataset_src')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LK_Vendor_Drop_Conn",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "order",
+						"container": "vendor-drop-dev"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "order_id,customer_id,product_id,order_amount,order_status,order_date,city",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LK_Vendor_Drop_Conn')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pip_child_ingst')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "cpy_ingest_brnz",
+						"name": "cpy_file_ingst",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -373,6 +369,14 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
+									"wildcardFolderPath": {
+										"value": "@pipeline().parameters.p_src_folder",
+										"type": "Expression"
+									},
+									"wildcardFileName": {
+										"value": "@concat(pipeline().parameters.p_src_file,'*.csv')",
+										"type": "Expression"
+									},
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -405,16 +409,16 @@
 								"referenceName": "DS_ADLS_SRC",
 								"type": "DatasetReference",
 								"parameters": {
-									"containerName": {
-										"value": "@pipeline().parameters.P_SourceContainer",
+									"srcContainer": {
+										"value": "@pipeline().parameters.p_src_container",
 										"type": "Expression"
 									},
-									"folderPath": {
-										"value": "@pipeline().parameters.P_SourceFolder",
+									"srcFolderPath": {
+										"value": "@pipeline().parameters.p_src_folder",
 										"type": "Expression"
 									},
-									"fileName": {
-										"value": "@pipeline().parameters.P_SourceFileName",
+									"srcFileName": {
+										"value": "@pipeline().parameters.p_src_file",
 										"type": "Expression"
 									}
 								}
@@ -425,16 +429,16 @@
 								"referenceName": "DS_ADLS_SNK",
 								"type": "DatasetReference",
 								"parameters": {
-									"containerName": {
-										"value": "@pipeline().parameters.P_SinkContainer",
+									"sinkContainer": {
+										"value": "@pipeline().parameters.p_sink_container",
 										"type": "Expression"
 									},
-									"folderPath": {
-										"value": "@pipeline().parameters.P_SinkFolder",
+									"sinkfolder": {
+										"value": "@pipeline().parameters.p_sink_folder",
 										"type": "Expression"
 									},
-									"filePath": {
-										"value": "@pipeline().parameters.P_SinkFileName",
+									"sinkFileName": {
+										"value": "@concat(pipeline().parameters.p_sink_folder,formatDateTime(utcNow(), 'yyyyMMdd'), '.csv')",
 										"type": "Expression"
 									}
 								}
@@ -446,22 +450,22 @@
 					"elapsedTimeMetric": {}
 				},
 				"parameters": {
-					"P_SourceContainer": {
+					"p_src_container": {
 						"type": "string"
 					},
-					"P_SourceFolder": {
+					"p_src_folder": {
 						"type": "string"
 					},
-					"P_SourceFileName": {
+					"p_sink_container": {
 						"type": "string"
 					},
-					"P_SinkContainer": {
+					"p_sink_folder": {
 						"type": "string"
 					},
-					"P_SinkFolder": {
+					"p_sink_file": {
 						"type": "string"
 					},
-					"P_SinkFileName": {
+					"p_src_file": {
 						"type": "string"
 					}
 				},
@@ -576,7 +580,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT\n    SourceContainer,\n    SourceFolder,\n    SourceFileName,\n    SinkContainer,\n    SinkBasePath,\n    SourceFileName AS SinkFileName,\n    FileFormat,\n    Delimiter,\n    HasHeader,\n    LoadType\nFROM dbo.ADF_File_Config\nWHERE IsActive = 1\nORDER BY Priority;",
+								"sqlReaderQuery": "select \n    SourceContainer,\n    SourceFolder,\n    SourceFilename,\n    TargetContainer as sinkContainer,\n    concat(TargetSchema,'/',TargetFolder) as sinkFolder,\n    TargetFileName as sinkFileName\nfrom metadata.AdfPipConfig;",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -605,6 +609,7 @@
 								"value": "@activity('LKP_Get_File_Config').output.value",
 								"type": "Expression"
 							},
+							"isSequential": false,
 							"activities": [
 								{
 									"name": "Exc_Ingest_Files",
