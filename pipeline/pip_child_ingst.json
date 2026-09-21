@@ -21,7 +21,7 @@
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFolderPath": {
-								"value": "@pipeline().parameters.P_SourceSystem",
+								"value": "@pipeline().parameters.P_SourceContainer",
 								"type": "Expression"
 							},
 							"wildcardFileName": {
@@ -61,7 +61,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"containerName": {
-								"value": "@pipeline().parameters.P_SourceSystem",
+								"value": "@pipeline().parameters.P_SourceContainer",
 								"type": "Expression"
 							},
 							"folderPath": {
@@ -81,7 +81,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"containerName": {
-								"value": "@pipeline().parameters.P_SinkContainer",
+								"value": "@pipeline().parameters.P_sinkContainer",
 								"type": "Expression"
 							},
 							"folderPath": {
@@ -98,22 +98,25 @@
 			}
 		],
 		"parameters": {
-			"P_SourceSystem": {
+			"P_SourceContainer": {
 				"type": "string"
 			},
 			"P_SourceFolder": {
 				"type": "string"
 			},
-			"P_SourceFileName": {
+			"P_SourceFilename": {
 				"type": "string"
 			},
-			"P_SinkContainer": {
+			"P_sinkContainer": {
 				"type": "string"
 			},
-			"P_SinkFolder": {
+			"P_sinkSchema": {
 				"type": "string"
 			},
-			"P_SinkFileName": {
+			"P_sinkFolder": {
+				"type": "string"
+			},
+			"P_sinkFileName": {
 				"type": "string"
 			}
 		},
