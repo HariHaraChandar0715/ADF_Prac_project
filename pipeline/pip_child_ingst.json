@@ -91,6 +91,10 @@
 							"sinkfolder": {
 								"value": "@pipeline().parameters.P_SinkFileName",
 								"type": "Expression"
+							},
+							"sinkFileName": {
+								"value": "@pipeline().parameters.P_sinkFileName",
+								"type": "Expression"
 							}
 						}
 					}
