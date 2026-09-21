@@ -9,9 +9,6 @@
 			"sinkContainer": {
 				"type": "string"
 			},
-			"sinkSchema": {
-				"type": "string"
-			},
 			"sinkfolder": {
 				"type": "string"
 			},
@@ -24,12 +21,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().sinkfolder",
-					"type": "Expression"
-				},
 				"folderPath": {
-					"value": "@dataset().sinkSchema",
+					"value": "@dataset().sinkfolder",
 					"type": "Expression"
 				},
 				"container": {

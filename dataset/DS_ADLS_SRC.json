@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"srcContainerName": {
+			"srcContainer": {
 				"type": "string"
 			},
 			"srcFolderPath": {
@@ -30,7 +30,7 @@
 					"type": "Expression"
 				},
 				"container": {
-					"value": "@dataset().srcContainerName",
+					"value": "@dataset().srcContainer",
 					"type": "Expression"
 				}
 			},
