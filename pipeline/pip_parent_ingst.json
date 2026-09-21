@@ -71,19 +71,19 @@
 										"type": "Expression"
 									},
 									"p_sink_container": {
-										"value": "@item().SourceFilename",
-										"type": "Expression"
-									},
-									"p_sink_folder": {
 										"value": "@item().sinkContainer",
 										"type": "Expression"
 									},
-									"p_sink_file": {
+									"p_sink_folder": {
 										"value": "@item().sinkFolder",
 										"type": "Expression"
 									},
-									"p_src_file": {
+									"p_sink_file": {
 										"value": "@item().sinkFileName",
+										"type": "Expression"
+									},
+									"p_src_file": {
+										"value": "@item().SourceFilename",
 										"type": "Expression"
 									}
 								}
