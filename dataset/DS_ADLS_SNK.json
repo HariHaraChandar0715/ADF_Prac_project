@@ -6,13 +6,16 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"containerName": {
+			"sinkContainer": {
 				"type": "string"
 			},
-			"folderPath": {
+			"sinkSchema": {
 				"type": "string"
 			},
-			"filePath": {
+			"sinkfolder": {
+				"type": "string"
+			},
+			"sinkFileName": {
 				"type": "string"
 			}
 		},
@@ -22,15 +25,15 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().filePath",
+					"value": "@dataset().sinkfolder",
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().folderPath",
+					"value": "@dataset().sinkSchema",
 					"type": "Expression"
 				},
 				"container": {
-					"value": "@dataset().containerName",
+					"value": "@dataset().sinkContainer",
 					"type": "Expression"
 				}
 			},
