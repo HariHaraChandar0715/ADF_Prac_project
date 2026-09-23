@@ -90,7 +90,7 @@
 								"type": "Expression"
 							},
 							"sinkFileName": {
-								"value": "@concat(pipeline().parameters.p_sink_folder,formatDateTime(utcNow(), 'yyyyMMdd'), '.csv')",
+								"value": "@concat(pipeline().parameters.p_sink_folder,'_',formatDateTime(utcNow(), 'yyyyMMdd'), '.csv')",
 								"type": "Expression"
 							}
 						}
